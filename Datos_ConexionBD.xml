@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuracion>
+  <conexion>
+    <servidor>localhost</servidor>
+    <baseDeDatos>bar</baseDeDatos>
+    <usuario>root</usuario>
+    <contrasena>6282</contrasena>
+  </conexion>
+</configuracion>
