@@ -70,7 +70,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(35, 81);
+            this.label2.Location = new System.Drawing.Point(26, 80);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(195, 22);
             this.label2.TabIndex = 2;
@@ -98,7 +98,7 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(233, 81);
+            this.txtNombre.Location = new System.Drawing.Point(239, 82);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(147, 22);
             this.txtNombre.TabIndex = 5;
@@ -165,7 +165,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(16, 142);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(133, 22);
+            this.textBox1.Size = new System.Drawing.Size(49, 22);
             this.textBox1.TabIndex = 25;
             // 
             // Cambiar_Precio
@@ -190,6 +190,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Cambiar_Precio";
             this.Text = "Cambiar Precio";
+            this.Load += new System.EventHandler(this.Cambiar_Precio_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPDF)).EndInit();
             this.ResumeLayout(false);

@@ -98,11 +98,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cambiar_Nombre.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cambiar_Nombre.Designer.cs">
+      <DependentUpon>Cambiar_Nombre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cambio_Imagen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cambio_Imagen.Designer.cs">
       <DependentUpon>Cambio_Imagen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Datos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Datos.Designer.cs">
+      <DependentUpon>Datos.cs</DependentUpon>
     </Compile>
     <Compile Include="DatosConecxion.cs">
       <SubType>Form</SubType>
@@ -136,6 +148,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilidades.cs" />
+    <EmbeddedResource Include="Cambiar_Nombre.resx">
+      <DependentUpon>Cambiar_Nombre.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cambio_Imagen.resx">
       <DependentUpon>Cambio_Imagen.cs</DependentUpon>
     </EmbeddedResource>

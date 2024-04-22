@@ -1,4 +1,5 @@
-﻿using System;
+﻿//6
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ namespace Administracion_ETRAY
     public partial class Nuevo_Producto : Form
     {
         public int opcion = 0;
-    
+
 
 
         public Nuevo_Producto(int opcionEntrada)
@@ -25,6 +26,7 @@ namespace Administracion_ETRAY
             pictureBoxPDF.MouseLeave += (sender, e) => Utilidades.PictureBox_MouseLeave(pictureBoxPDF, sender, e);
 
             this.opcion = opcionEntrada;
+
         }
 
         private void Nueva_Bebida_Load(object sender, EventArgs e)
@@ -35,12 +37,15 @@ namespace Administracion_ETRAY
                 lblTitulo.Text = "Nueva Bebida";
                 // llamada a la función de coger datos de Database de Bebidas
                 comboBoxBebida();
+
+
             }
             if (opcion == 2)
             {
-                // llamada a la función de coger datos de Database de Comidas
                 lblTipo_Produc.Text = "Tipos Comida";
                 lblTitulo.Text = "Nueva Comida";
+                comboBoxComida();
+                txt_Codigo_ba.Enabled = false;
             }
         }
 
@@ -66,7 +71,7 @@ namespace Administracion_ETRAY
 
         private void txtPrecio_Leave(object sender, EventArgs e)
         {
-            // Utilidades.AplicarFormatoEuros(txtPrecio);
+            //Utilidades.AplicarFormatoEuros(txtPrecio);
         }
 
         private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
@@ -93,16 +98,17 @@ namespace Administracion_ETRAY
                 string Nombre = txtNom_Produc.Text;
                 decimal precio = decimal.Parse(txtPrecio.Text);
                 string rutaImagen = txtURL.Text;
-
+                string TipoComida = cmbProducto.Text;
                 byte[] imagenBytes = Utilidades.ConvertirImagenABinario(rutaImagen);
 
-                //InsertarComida(Nombre, precio, imagenBytes);
+                InsertarComida(Nombre, precio, imagenBytes, TipoComida);
+
             }
 
             LimpiarCampos();
         }
 
-        private void InsertarBebida(string nombre, decimal precio, byte[] imagen, string codigoBarras, string tipoBebida)
+        private void InsertarBebida(string nombre, decimal precio, byte[] imagen, string codigoBarras, string tipo_bebida)
         {
             try
             {
@@ -114,7 +120,9 @@ namespace Administracion_ETRAY
 
                     if (conexion.State == ConnectionState.Open)
                     {
-                        string consulta = "INSERT INTO Bebidas (Nombre, Precio, CodigoBarras, Imagen, ID_TipoBebida) VALUES (@Nombre, @Precio, @CodigoBarras, @Imagen, (SELECT ID_TipoBebida FROM tipo_bebida WHERE TipoBebida = @TipoBebida))";
+                        string consulta = "INSERT INTO Bebidas (nombre_beb, precio_beb, codigodebarras_beb, Imagen, id_tipo_beb) " +
+                                         "VALUES (@Nombre, @Precio, @CodigoBarras, @Imagen, " +
+                                         "(SELECT idtipo_bebida FROM tipo_bebida WHERE tipo_bebida = @tipo_bebida))";
 
                         using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                         {
@@ -122,13 +130,13 @@ namespace Administracion_ETRAY
                             comando.Parameters.AddWithValue("@Precio", precio);
                             comando.Parameters.AddWithValue("@CodigoBarras", codigoBarras);
                             comando.Parameters.AddWithValue("@Imagen", imagen);
-                            comando.Parameters.AddWithValue("@TipoBebida", tipoBebida);
+                            comando.Parameters.AddWithValue("@tipo_bebida", tipo_bebida);
 
                             comando.ExecuteNonQuery();
 
                             MessageBox.Show("Bebida insertada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                           // LimpiarCampos();
+                            LimpiarCampos();
                         }
                     }
                     else
@@ -137,14 +145,25 @@ namespace Administracion_ETRAY
                     }
                 }
             }
+            catch (MySqlException ex)
+            {
+                // Control de errores específico para MySQL
+                switch (ex.Number)
+                {
+                    case 1062: // Duplicado de clave única
+                        MessageBox.Show("Error: La bebida con este nombre ya existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    default:
+                        MessageBox.Show($"Error MySQL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                }
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al insertar la bebida en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error general al insertar la bebida en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        
-       
         private void comboBoxBebida()
         {
             cmbProducto.DropDownStyle = ComboBoxStyle.DropDown;
@@ -159,7 +178,7 @@ namespace Administracion_ETRAY
                 {
                     conexion.Open();
 
-                    string consulta = "SELECT TipoBebida FROM tipo_bebida";
+                    string consulta = "SELECT tipo_bebida FROM tipo_bebida";
 
                     using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                     {
@@ -167,7 +186,7 @@ namespace Administracion_ETRAY
                         {
                             while (reader.Read())
                             {
-                                cmbProducto.Items.Add(reader["TipoBebida"].ToString());
+                                cmbProducto.Items.Add(reader["tipo_bebida"].ToString());
                             }
                         }
                     }
@@ -176,6 +195,62 @@ namespace Administracion_ETRAY
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al llenar la ComboBox de Tipo Producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void InsertarComida(string nombre, decimal precio, byte[] imagen, string tipo_comida)
+        {
+            try
+            {
+                string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+
+                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                {
+                    conexion.Open();
+
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        string consulta = "INSERT INTO comida (nombre_com, precio_com, imagen_com, id_tipo_com) " +
+                                         "VALUES (@Nombre, @Precio, @Imagen, " +
+                                         "(SELECT idtipo_comida FROM tipo_comida WHERE tipo_comida = @tipo_comida))";
+
+                        using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                        {
+                            comando.Parameters.AddWithValue("@Nombre", nombre);
+                            comando.Parameters.AddWithValue("@Precio", precio);
+
+                            comando.Parameters.AddWithValue("@Imagen", imagen);
+                            comando.Parameters.AddWithValue("@tipo_comida", tipo_comida);
+
+                            comando.ExecuteNonQuery();
+
+                            MessageBox.Show($"Comida {tipo_comida} insertada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            LimpiarCampos();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("La conexión a la base de datos no se ha establecido correctamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Control de errores específico para MySQL
+                switch (ex.Number)
+                {
+                    case 1062: // Duplicado de clave única
+                        MessageBox.Show("Error: La bebida con este nombre ya existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    default:
+                        MessageBox.Show($"Error MySQL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error general al insertar la bebida en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -189,13 +264,45 @@ namespace Administracion_ETRAY
             cmbProducto.Text = string.Empty;
         }
 
-       
-        
+        private void comboBoxComida()
+        {
+            cmbProducto.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbProducto.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+            try
+            {
+                string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+
+                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                {
+                    conexion.Open();
+
+                    string consulta = "SELECT tipo_comida FROM tipo_comida";
+
+                    using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                    {
+                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                cmbProducto.Items.Add(reader["tipo_comida"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al llenar la ComboBox de Tipo Producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void pictureBoxPDF_Click(object sender, EventArgs e)
         {
             Utilidades.ReproducirSonido();
 
-            string rutaPDF = "C:\\Users\\asix\\Desktop\\Administracion_ETRAY\\Resources\\PDF\\PaginaInicio.pdf";
+            string rutaPDF = "C:\\Users\\Usuario\\Desktop\\Administracion_ETRAY\\Resources\\PDF\\PaginaInicio.pdf";
 
             AbrirArchivoPDF(rutaPDF);
         }
@@ -220,5 +327,6 @@ namespace Administracion_ETRAY
             }
         }
 
+     
     }
 }

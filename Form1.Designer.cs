@@ -121,6 +121,7 @@
             this.comidaToolStripMenuItem1.Name = "comidaToolStripMenuItem1";
             this.comidaToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.comidaToolStripMenuItem1.Text = "Comida";
+            this.comidaToolStripMenuItem1.Click += new System.EventHandler(this.comidaToolStripMenuItem1_Click);
             // 
             // nombreToolStripMenuItem
             // 

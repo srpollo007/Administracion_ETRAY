@@ -2,7 +2,7 @@
 <configuracion>
   <conexion>
     <servidor>localhost</servidor>
-    <baseDeDatos>bar</baseDeDatos>
+    <baseDeDatos>etray</baseDeDatos>
     <usuario>root</usuario>
     <contrasena>6282</contrasena>
   </conexion>

@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
+
 namespace Administracion_ETRAY
 {
     public partial class Cambio_Imagen : Form
@@ -25,31 +26,63 @@ namespace Administracion_ETRAY
             cmbProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cmbProducto.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            try
+            if (opcion == 1)
             {
-                string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
-
-                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                try
                 {
-                    conexion.Open();
+                    string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
 
-                    string consulta = (opcion == 1) ? "SELECT Nombre FROM bebidas" : "SELECT Nombre FROM comidas";
-
-                    using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                    using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
                     {
-                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        conexion.Open();
+
+                        string consulta = "SELECT nombre_beb FROM bebidas";
+
+                        using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                         {
-                            while (reader.Read())
+                            using (MySqlDataReader reader = comando.ExecuteReader())
                             {
-                                cmbProducto.Items.Add(reader["Nombre"].ToString());
+                                while (reader.Read())
+                                {
+                                    cmbProducto.Items.Add(reader["nombre_beb"].ToString());
+                                }
                             }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al llenar la ComboBox de Tipo Producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
+            if (opcion == 2)
             {
-                MessageBox.Show($"Error al llenar la ComboBox de Tipo Producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try
+                {
+                    string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+
+                    using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                    {
+                        conexion.Open();
+
+                        string consulta = "SELECT nombre_com FROM comida";
+
+                        using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                        {
+                            using (MySqlDataReader reader = comando.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    cmbProducto.Items.Add(reader["nombre_com"].ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al llenar la ComboBox de Tipo Producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -70,74 +103,106 @@ namespace Administracion_ETRAY
 
         private void btnCambiar_Click(object sender, EventArgs e)
         {
-            if (opcion == 1)
+            if (cmbProducto.SelectedIndex == -1)
             {
-
-               string bebida = cmbProducto.Text;
-
-
+                MessageBox.Show("Por favor, seleccione un producto antes de intentar cambiar la imagen.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            if (opcion == 2)
+
+            if (pictureBox2.Image == null)
             {
-                string comida = cmbProducto.Text;
-
-
-                string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
-
+                MessageBox.Show("Por favor, seleccione una imagen primero.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-        }
 
-        private void cmbProducto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbProducto.SelectedIndex != -1)
+
+          
+            //byte[] imagenBytes = Utilidades.ConvertirImagenABinario();
+
+           // if (imagenBytes == null) return;  // Si hay un error en la conversión, termina la ejecución
+
+            string nombreProducto = cmbProducto.Text;
+            string tabla = opcion == 1 ? "bebidas" : "comidas";
+            string columnaNombre = opcion == 1 ? "nombre_beb" : "nombre_com";
+            string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+
+            try
             {
-
-                try
+                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
                 {
-                    string nombreProducto = cmbProducto.SelectedItem.ToString();
-                    string columnaImagen = (opcion == 1) ? "Imagen" : "Imagen"; // Asegúrate de poner el nombre correcto de la columna
+                    conexion.Open();
+                    string consulta = $"UPDATE {tabla} SET Imagen = @Imagen WHERE {columnaNombre} = @Nombre";
 
-                    string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
-
-                    using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                    using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                     {
-                        conexion.Open();
+                        //comando.Parameters.AddWithValue("@Imagen", imagenBytes);
+                        comando.Parameters.AddWithValue("@Nombre", nombreProducto);
 
-                        string consulta = $"SELECT {columnaImagen} FROM {(opcion == 1 ? "bebidas" : "comidas")} WHERE Nombre = @Nombre";
-
-                        using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                        int resultado = comando.ExecuteNonQuery();
+                        if (resultado > 0)
                         {
-                            comando.Parameters.AddWithValue("@Nombre", nombreProducto);
-
-                            object result = comando.ExecuteScalar();
-                            if (result != null)
-                            {
-                                byte[] imagenBytes = (byte[])result;
-
-                                // Muestra la imagen en el PictureBox
-                                using (MemoryStream ms = new MemoryStream(imagenBytes))
-                                {
-                                    pictureBox1.Image = Image.FromStream(ms);
-                                }
-                            }
-                            else
-                            {
-                                // Si no hay imagen en la base de datos, puedes mostrar una imagen predeterminada o dejar el PictureBox en blanco.
-                                pictureBox1.Image = null;
-                            }
+                            MessageBox.Show("La imagen ha sido actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró el producto para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al obtener la imagen del producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Por favor, seleccione un producto.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Error al actualizar la imagen en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        private void cmbProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbProducto.SelectedIndex == -1)
+            {
+                MessageBox.Show("Por favor, seleccione un producto.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string nombreProducto = cmbProducto.SelectedItem.ToString();
+            string tabla = opcion == 1 ? "bebidas" : "comida";
+            string columnaNombre = opcion == 1 ? "nombre_beb" : "nombre_com";
+            string columnaImagen = "Imagen"; // Asumiendo que el nombre de la columna de imagen es el mismo para ambas tablas
+            string consulta = $"SELECT {columnaImagen} FROM {tabla} WHERE {columnaNombre} = @Nombre";
+            string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+
+            try
+            {
+                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                {
+                    conexion.Open();
+                    using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                    {
+                        comando.Parameters.AddWithValue("@Nombre", nombreProducto);
+
+                        object result = comando.ExecuteScalar();
+                        if (result != null)
+                        {
+                            byte[] imagenBytes = (byte[])result;
+                            using (MemoryStream ms = new MemoryStream(imagenBytes))
+                            {
+                                pictureBox1.Image = Image.FromStream(ms);
+                            }
+                        }
+                        else
+                        {
+                            pictureBox1.Image = null; // O mostrar una imagen predeterminada
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener la imagen del producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -155,8 +220,6 @@ namespace Administracion_ETRAY
                 {
                     MessageBox.Show($"Error al cargar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-
 
 
             }
