@@ -112,22 +112,22 @@
             // bebidaToolStripMenuItem1
             // 
             this.bebidaToolStripMenuItem1.Name = "bebidaToolStripMenuItem1";
-            this.bebidaToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.bebidaToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.bebidaToolStripMenuItem1.Text = "Bebida";
             this.bebidaToolStripMenuItem1.Click += new System.EventHandler(this.bebidaToolStripMenuItem1_Click);
             // 
             // comidaToolStripMenuItem1
             // 
             this.comidaToolStripMenuItem1.Name = "comidaToolStripMenuItem1";
-            this.comidaToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.comidaToolStripMenuItem1.Size = new System.Drawing.Size(144, 26);
             this.comidaToolStripMenuItem1.Text = "Comida";
             this.comidaToolStripMenuItem1.Click += new System.EventHandler(this.comidaToolStripMenuItem1_Click);
             // 
             // nombreToolStripMenuItem
             // 
             this.nombreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.comidaToolStripMenuItem3,
-            this.bebidaToolStripMenuItem3});
+            this.bebidaToolStripMenuItem3,
+            this.comidaToolStripMenuItem3});
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
             this.nombreToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.nombreToolStripMenuItem.Text = "Nombre";
@@ -135,15 +135,16 @@
             // comidaToolStripMenuItem3
             // 
             this.comidaToolStripMenuItem3.Name = "comidaToolStripMenuItem3";
-            this.comidaToolStripMenuItem3.Size = new System.Drawing.Size(144, 26);
+            this.comidaToolStripMenuItem3.Size = new System.Drawing.Size(224, 26);
             this.comidaToolStripMenuItem3.Text = "Comida";
             this.comidaToolStripMenuItem3.Click += new System.EventHandler(this.comidaToolStripMenuItem3_Click);
             // 
             // bebidaToolStripMenuItem3
             // 
             this.bebidaToolStripMenuItem3.Name = "bebidaToolStripMenuItem3";
-            this.bebidaToolStripMenuItem3.Size = new System.Drawing.Size(144, 26);
+            this.bebidaToolStripMenuItem3.Size = new System.Drawing.Size(224, 26);
             this.bebidaToolStripMenuItem3.Text = "Bebida";
+            this.bebidaToolStripMenuItem3.Click += new System.EventHandler(this.bebidaToolStripMenuItem3_Click);
             // 
             // fotoGrafiaToolStripMenuItem
             // 

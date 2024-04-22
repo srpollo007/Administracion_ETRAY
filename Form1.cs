@@ -63,6 +63,8 @@ namespace Administracion_ETRAY
 
         private void comidaToolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            Cambiar_Nombre cambiarNombre = new Cambiar_Nombre(2);
+            cambiarNombre.ShowDialog();
 
         }
 
@@ -138,6 +140,12 @@ namespace Administracion_ETRAY
         {
             Cambiar_Precio cambiarPrecio = new Cambiar_Precio(2);
             cambiarPrecio.ShowDialog();
+        }
+
+        private void bebidaToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Cambiar_Nombre cambiarNombre = new Cambiar_Nombre(1);
+            cambiarNombre.ShowDialog();
         }
     }
 }
