@@ -85,5 +85,7 @@ namespace Administracion_ETRAY
                 MessageBox.Show($"Error al llenar la DataGridView: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        privare
     }
 }
