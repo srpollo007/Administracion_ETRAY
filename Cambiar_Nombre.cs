@@ -15,14 +15,11 @@ namespace Administracion_ETRAY
     public partial class Cambiar_Nombre : Form
     {
         public int opcion = 0;
-
         public Cambiar_Nombre(int opcionEntrada)
         {
             InitializeComponent();
             this.opcion = opcionEntrada;
         }
-
-
         private void LLENARDATAVIEWGRIDBebida()
         {
 
@@ -55,7 +52,6 @@ namespace Administracion_ETRAY
                 MessageBox.Show($"Error al llenar la DataGridView: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void LLENARDATAVIEWGRIDComida()
         {
 
@@ -88,7 +84,6 @@ namespace Administracion_ETRAY
                 MessageBox.Show($"Error al llenar la DataGridView: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void Cambiar_Nombre_Load(object sender, EventArgs e)
         {
             if(opcion == 1)
@@ -184,7 +179,6 @@ namespace Administracion_ETRAY
                 }
             }
         }
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (opcion == 1)
@@ -213,12 +207,7 @@ namespace Administracion_ETRAY
 
         }
     
-    
-    
-    
-    
-    
-    
+      
     }
 
 }
