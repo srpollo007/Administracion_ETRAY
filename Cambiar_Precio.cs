@@ -145,7 +145,7 @@ namespace Administracion_ETRAY
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            if(opcion == 1)
+                if(opcion == 1)
             {
                 try
                 {

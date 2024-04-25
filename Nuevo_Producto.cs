@@ -19,7 +19,7 @@ namespace Administracion_ETRAY
         public Nuevo_Producto(int opcionEntrada)
         {
             InitializeComponent();
-            ProbarConexion();
+            
             txtURL.Click += txtURL_Click;
 
             pictureBoxPDF.MouseEnter += (sender, e) => Utilidades.PictureBox_MouseEnter(pictureBoxPDF, sender, e);
@@ -46,16 +46,6 @@ namespace Administracion_ETRAY
                 lblTitulo.Text = "Nueva Comida";
                 comboBoxComida();
                 txt_Codigo_ba.Enabled = false;
-            }
-        }
-
-        private void ProbarConexion()
-        {
-            string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
-
-            if (cadenaConexion != null)
-            {
-                Utilidades.ProbarConexion(cadenaConexion);
             }
         }
 

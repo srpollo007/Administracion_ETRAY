@@ -206,8 +206,7 @@ namespace Administracion_ETRAY
             }
 
         }
-    
-      
+         
     }
 
 }

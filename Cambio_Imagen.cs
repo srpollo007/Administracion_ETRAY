@@ -12,6 +12,7 @@ namespace Administracion_ETRAY
     public partial class Cambio_Imagen : Form
     {
         public int opcion = 0;
+      
 
         public Cambio_Imagen(int opcionesEntrada)
         {
@@ -36,7 +37,7 @@ namespace Administracion_ETRAY
                     {
                         conexion.Open();
 
-                        string consulta = "SELECT nombre_beb FROM bebidas";
+                        string consulta = "SELECT idbebidas, nombre_beb FROM bebidas";
 
                         using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                         {
@@ -44,7 +45,9 @@ namespace Administracion_ETRAY
                             {
                                 while (reader.Read())
                                 {
-                                    cmbProducto.Items.Add(reader["nombre_beb"].ToString());
+                                    // Crear un objeto Producto con el ID y el nombre y agregarlo a la lista desplegable
+                                    Producto producto = new Producto(Convert.ToInt32(reader["idbebidas"]), reader["nombre_beb"].ToString());
+                                    cmbProducto.Items.Add(producto);
                                 }
                             }
                         }
@@ -73,7 +76,9 @@ namespace Administracion_ETRAY
                             {
                                 while (reader.Read())
                                 {
-                                    cmbProducto.Items.Add(reader["nombre_com"].ToString());
+                                    // Crear un objeto Producto con el nombre y agregarlo a la lista desplegable
+                                    Producto producto = new Producto(0, reader["nombre_com"].ToString());
+                                    cmbProducto.Items.Add(producto);
                                 }
                             }
                         }
@@ -86,76 +91,147 @@ namespace Administracion_ETRAY
             }
         }
 
+
         private void Cambio_Imagen_Load(object sender, EventArgs e)
         {
             if (opcion == 1)
             {
                 lblSeleccione.Text = "Seleccione Bebida";
                 comboBoxProductos();
+                
+
             }
             if (opcion == 2)
             {
                 // llamada a la función de coger datos de Database de Comidas
                 lblSeleccione.Text = "Seleccione Comida";
+                comboBoxProductos();
 
             }
         }
 
         private void btnCambiar_Click(object sender, EventArgs e)
+        {    
+                string Producto = cmbProducto.Text;  
+                string rutaImagen = txtruta.Text;
+                byte[] imagenBytes = Utilidades.ConvertirImagenABinario(rutaImagen);
+
+                ActualizarFoto(imagenBytes, Producto);            
+
+        }
+
+        private void ActualizarFoto(byte[] imagen, string Producto)
         {
-            if (cmbProducto.SelectedIndex == -1)
+            if(opcion == 1)
             {
-                MessageBox.Show("Por favor, seleccione un producto antes de intentar cambiar la imagen.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (pictureBox2.Image == null)
-            {
-                MessageBox.Show("Por favor, seleccione una imagen primero.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-
-          
-            //byte[] imagenBytes = Utilidades.ConvertirImagenABinario();
-
-           // if (imagenBytes == null) return;  // Si hay un error en la conversión, termina la ejecución
-
-            string nombreProducto = cmbProducto.Text;
-            string tabla = opcion == 1 ? "bebidas" : "comidas";
-            string columnaNombre = opcion == 1 ? "nombre_beb" : "nombre_com";
-            string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
-
-            try
-            {
-                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                try
                 {
-                    conexion.Open();
-                    string consulta = $"UPDATE {tabla} SET Imagen = @Imagen WHERE {columnaNombre} = @Nombre";
+                    string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
 
-                    using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                    using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
                     {
-                        //comando.Parameters.AddWithValue("@Imagen", imagenBytes);
-                        comando.Parameters.AddWithValue("@Nombre", nombreProducto);
+                        conexion.Open();
 
-                        int resultado = comando.ExecuteNonQuery();
-                        if (resultado > 0)
+                        if (conexion.State == ConnectionState.Open)
                         {
-                            MessageBox.Show("La imagen ha sido actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            string consulta = "UPDATE bebidas SET Imagen = @Imagen WHERE nombre_beb = @Nombre";
+
+                            using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                            {
+                                comando.Parameters.AddWithValue("@Nombre", Producto);
+                                
+                                comando.Parameters.AddWithValue("@Imagen", imagen);
+                              
+
+                                comando.ExecuteNonQuery();
+
+                                MessageBox.Show("Actuaalizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                               
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("No se encontró el producto para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("La conexión a la base de datos no se ha establecido correctamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
+                catch (MySqlException ex)
+                {
+                    // Control de errores específico para MySQL
+                    switch (ex.Number)
+                    {
+                        case 1062: // Duplicado de clave única
+                            MessageBox.Show("Error: La bebida con este nombre ya existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        default:
+                            MessageBox.Show($"Error MySQL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error general al insertar la bebida en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
             }
-            catch (Exception ex)
+            if (opcion == 2)
             {
-                MessageBox.Show($"Error al actualizar la imagen en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try
+                {
+                    string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+
+                    using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                    {
+                        conexion.Open();
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            string consulta = "UPDATE comida SET Imagen = @Imagen WHERE nombre_com = @Nombre";
+
+                            using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
+                            {
+                                comando.Parameters.AddWithValue("@Nombre", Producto);
+
+                                comando.Parameters.AddWithValue("@Imagen", imagen);
+
+
+                                comando.ExecuteNonQuery();
+
+                                MessageBox.Show("Actuaalizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("La conexión a la base de datos no se ha establecido correctamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    // Control de errores específico para MySQL
+                    switch (ex.Number)
+                    {
+                        case 1062: // Duplicado de clave única
+                            MessageBox.Show("Error: La fotografia ya existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        default:
+                            MessageBox.Show($"Error MySQL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error general al insertar la bebida en la base de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
         }
-
+            
+               
 
         private void cmbProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -206,24 +282,28 @@ namespace Administracion_ETRAY
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos de imagen|*.png;*.jpg;*.jpeg;*.gif;*.bmp|Todos los archivos|*.*";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Intenta cargar la imagen seleccionada en el PictureBox
-                    pictureBox2.Image = Image.FromFile(openFileDialog.FileName);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al cargar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-
-            }
+          
+                Utilidades.SeleccionarYMostrarImagen(txtruta, pictureBox2);
+           
         }
     }
+
+    public class Producto
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+
+        public Producto(int id, string nombre)
+        {
+            Id = id;
+            Nombre = nombre;
+        }
+
+        public override string ToString()
+        {
+            return Nombre;
+        }
+    }
+
 }
 

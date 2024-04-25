@@ -105,7 +105,7 @@ namespace Administracion_ETRAY
             try
             {
                 XmlDocument doc = new XmlDocument();
-                doc.Load("C:\\Users\\asix\\Desktop\\Administracion_ETRAY\\Datos_ConexionBD.xml");
+                doc.Load("C:\\Users\\david\\Music\\Administracion_ETRAY\\Datos_ConexionBD.xml");
 
                 XmlNode servidorNode = doc.DocumentElement.SelectSingleNode("/configuracion/conexion/servidor");
                 XmlNode baseDeDatosNode = doc.DocumentElement.SelectSingleNode("/configuracion/conexion/baseDeDatos");
