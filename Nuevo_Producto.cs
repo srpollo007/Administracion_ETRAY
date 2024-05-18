@@ -200,7 +200,7 @@ namespace Administracion_ETRAY
 
                     if (conexion.State == ConnectionState.Open)
                     {
-                        string consulta = "INSERT INTO comida (nombre_com, precio_com, imagen_com, id_tipo_com) " +
+                        string consulta = "INSERT INTO comida (nombre_com, precio_com, Imagen, id_tipo_com) " +
                                          "VALUES (@Nombre, @Precio, @Imagen, " +
                                          "(SELECT idtipo_comida FROM tipo_comida WHERE tipo_comida = @tipo_comida))";
 
@@ -214,7 +214,7 @@ namespace Administracion_ETRAY
 
                             comando.ExecuteNonQuery();
 
-                            MessageBox.Show($"Comida {tipo_comida} insertada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show($"Comida {tipo_comida} {nombre} insertada correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             LimpiarCampos();
                         }

@@ -155,6 +155,7 @@
             this.pictureBoxPDF.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPDF.TabIndex = 19;
             this.pictureBoxPDF.TabStop = false;
+            this.pictureBoxPDF.Click += new System.EventHandler(this.pictureBoxPDF_Click);
             // 
             // txtruta
             // 

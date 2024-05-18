@@ -173,7 +173,8 @@ namespace Administracion_ETRAY
             try
             {
                 // Inicializa el reproductor de sonido con la ruta del archivo de sonido
-                reproductorSonido = new SoundPlayer("C:\\Users\\asix\\Desktop\\Administracion_ETRAY\\Image\\ring.wav");
+                //reproductorSonido = new SoundPlayer("C:\\Users\\asix\\Desktop\\Administracion_ETRAY\\Image\\ring.wav");
+                reproductorSonido = new SoundPlayer("C:\\Users\\david\\Music\\Administracion_ETRAY\\Image\\ring.wav");
 
                 // Carga el sonido en la memoria
                 reproductorSonido.Load();
@@ -186,7 +187,7 @@ namespace Administracion_ETRAY
 
         public static void ReproducirSonido()
         {
-            // Reproduce el sonido
+          
             reproductorSonido.Play();
         }
 

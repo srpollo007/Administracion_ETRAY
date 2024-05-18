@@ -241,12 +241,12 @@ namespace Administracion_ETRAY
                 return;
             }
 
-            string nombreProducto = cmbProducto.SelectedItem.ToString();
-            string tabla = opcion == 1 ? "bebidas" : "comida";
-            string columnaNombre = opcion == 1 ? "nombre_beb" : "nombre_com";
-            string columnaImagen = "Imagen"; // Asumiendo que el nombre de la columna de imagen es el mismo para ambas tablas
-            string consulta = $"SELECT {columnaImagen} FROM {tabla} WHERE {columnaNombre} = @Nombre";
-            string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
+                string nombreProducto = cmbProducto.SelectedItem.ToString();
+                string tabla = opcion == 1 ? "bebidas" : "comida";
+                string columnaNombre = opcion == 1 ? "nombre_beb" : "nombre_com";
+                string columnaImagen = "Imagen"; // Asumiendo que el nombre de la columna de imagen es el mismo para ambas tablas
+                string consulta = $"SELECT {columnaImagen} FROM {tabla} WHERE {columnaNombre} = @Nombre";
+                string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
 
             try
             {
@@ -285,6 +285,11 @@ namespace Administracion_ETRAY
           
                 Utilidades.SeleccionarYMostrarImagen(txtruta, pictureBox2);
            
+        }
+
+        private void pictureBoxPDF_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

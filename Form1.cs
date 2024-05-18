@@ -23,7 +23,9 @@ namespace Administracion_ETRAY
          
 
             tamañoOriginal = pictureBoxPDF.Size;
-            reproductorSonido = new SoundPlayer("C:\\Users\\asix\\Desktop\\Administracion_ETRAY\\Image\\ring.wav");
+           // reproductorSonido = new SoundPlayer("C:\\Users\\asix\\Desktop\\Administracion_ETRAY\\Image\\ring.wav");
+            reproductorSonido = new SoundPlayer("C:\\Users\\david\\Music\\Administracion_ETRAY\\Image\\ring.wav");
+
 
 
             // Asocia los eventos MouseEnter y MouseLeave
@@ -146,6 +148,53 @@ namespace Administracion_ETRAY
         {
             Cambiar_Nombre cambiarNombre = new Cambiar_Nombre(1);
             cambiarNombre.ShowDialog();
+        }
+
+        private void cuentasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cuentas cuentas = new Cuentas();
+            cuentas.ShowDialog();
+        }
+
+        private void btnCuentaMenu_Click(object sender, EventArgs e)
+        {
+            Cuentas cuentas = new Cuentas();
+            cuentas.ShowDialog();
+        }
+
+        private void eToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NuevaTabletToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tablets tablet = new Tablets();
+            tablet.ShowDialog();
+        }
+
+        private void mesasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Mesas    mesa = new Mesas();
+            mesa.ShowDialog();
+        }
+
+        private void btnMesasMenu_Click(object sender, EventArgs e)
+        {
+            Mesas mesa = new Mesas();
+            mesa.ShowDialog();
+        }
+
+        private void bebidaToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            OcultarProducto ocultar = new OcultarProducto(1);
+            ocultar.ShowDialog();
+        }
+
+        private void comidaToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            OcultarProducto ocultar = new OcultarProducto(2);
+            ocultar.ShowDialog();
         }
     }
 }

@@ -110,6 +110,12 @@
     <Compile Include="Cambio_Imagen.Designer.cs">
       <DependentUpon>Cambio_Imagen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cuentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cuentas.Designer.cs">
+      <DependentUpon>Cuentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Datos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,11 +140,23 @@
     <Compile Include="Cambiar_Precio.Designer.cs">
       <DependentUpon>Cambiar_Precio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mesas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mesas.Designer.cs">
+      <DependentUpon>Mesas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Nuevo_Producto.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Nuevo_Producto.Designer.cs">
       <DependentUpon>Nuevo_Producto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OcultarProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OcultarProducto.Designer.cs">
+      <DependentUpon>OcultarProducto.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,12 +165,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tablets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tablets.Designer.cs">
+      <DependentUpon>Tablets.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilidades.cs" />
     <EmbeddedResource Include="Cambiar_Nombre.resx">
       <DependentUpon>Cambiar_Nombre.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cambio_Imagen.resx">
       <DependentUpon>Cambio_Imagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cuentas.resx">
+      <DependentUpon>Cuentas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatosConecxion.resx">
       <DependentUpon>DatosConecxion.cs</DependentUpon>
@@ -163,13 +190,22 @@
     <EmbeddedResource Include="Cambiar_Precio.resx">
       <DependentUpon>Cambiar_Precio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Mesas.resx">
+      <DependentUpon>Mesas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Nuevo_Producto.resx">
       <DependentUpon>Nuevo_Producto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OcultarProducto.resx">
+      <DependentUpon>OcultarProducto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tablets.resx">
+      <DependentUpon>Tablets.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
