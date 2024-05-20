@@ -44,16 +44,17 @@
             this.fotoGrafiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bebidaToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.comidaToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ocultarProductoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bebidaToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.comidaToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.eToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editarDatosDeConexiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mesasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCuentaMenu = new System.Windows.Forms.Button();
             this.btnMesasMenu = new System.Windows.Forms.Button();
-            this.ocultarProductoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBoxPDF = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.bebidaToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.comidaToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnMenuCierre = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPDF)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -126,7 +127,7 @@
             this.bebidaToolStripMenuItem1,
             this.comidaToolStripMenuItem1});
             this.precioToolStripMenuItem.Name = "precioToolStripMenuItem";
-            this.precioToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.precioToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.precioToolStripMenuItem.Text = "Precio";
             // 
             // bebidaToolStripMenuItem1
@@ -149,7 +150,7 @@
             this.bebidaToolStripMenuItem3,
             this.comidaToolStripMenuItem3});
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
-            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.nombreToolStripMenuItem.Text = "Nombre";
             // 
             // bebidaToolStripMenuItem3
@@ -172,7 +173,7 @@
             this.bebidaToolStripMenuItem2,
             this.comidaToolStripMenuItem2});
             this.fotoGrafiaToolStripMenuItem.Name = "fotoGrafiaToolStripMenuItem";
-            this.fotoGrafiaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fotoGrafiaToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.fotoGrafiaToolStripMenuItem.Text = "Fotografia";
             this.fotoGrafiaToolStripMenuItem.Click += new System.EventHandler(this.fotoGrafiaToolStripMenuItem_Click);
             // 
@@ -189,6 +190,29 @@
             this.comidaToolStripMenuItem2.Size = new System.Drawing.Size(116, 22);
             this.comidaToolStripMenuItem2.Text = "Comida";
             this.comidaToolStripMenuItem2.Click += new System.EventHandler(this.comidaToolStripMenuItem2_Click);
+            // 
+            // ocultarProductoToolStripMenuItem
+            // 
+            this.ocultarProductoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bebidaToolStripMenuItem4,
+            this.comidaToolStripMenuItem4});
+            this.ocultarProductoToolStripMenuItem.Name = "ocultarProductoToolStripMenuItem";
+            this.ocultarProductoToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.ocultarProductoToolStripMenuItem.Text = "Ocultar Producto";
+            // 
+            // bebidaToolStripMenuItem4
+            // 
+            this.bebidaToolStripMenuItem4.Name = "bebidaToolStripMenuItem4";
+            this.bebidaToolStripMenuItem4.Size = new System.Drawing.Size(116, 22);
+            this.bebidaToolStripMenuItem4.Text = "Bebida";
+            this.bebidaToolStripMenuItem4.Click += new System.EventHandler(this.bebidaToolStripMenuItem4_Click);
+            // 
+            // comidaToolStripMenuItem4
+            // 
+            this.comidaToolStripMenuItem4.Name = "comidaToolStripMenuItem4";
+            this.comidaToolStripMenuItem4.Size = new System.Drawing.Size(116, 22);
+            this.comidaToolStripMenuItem4.Text = "Comida";
+            this.comidaToolStripMenuItem4.Click += new System.EventHandler(this.comidaToolStripMenuItem4_Click);
             // 
             // eToolStripMenuItem
             // 
@@ -243,15 +267,6 @@
             this.btnMesasMenu.UseVisualStyleBackColor = false;
             this.btnMesasMenu.Click += new System.EventHandler(this.btnMesasMenu_Click);
             // 
-            // ocultarProductoToolStripMenuItem
-            // 
-            this.ocultarProductoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bebidaToolStripMenuItem4,
-            this.comidaToolStripMenuItem4});
-            this.ocultarProductoToolStripMenuItem.Name = "ocultarProductoToolStripMenuItem";
-            this.ocultarProductoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.ocultarProductoToolStripMenuItem.Text = "Ocultar Producto";
-            // 
             // pictureBoxPDF
             // 
             this.pictureBoxPDF.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPDF.Image")));
@@ -278,19 +293,21 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // bebidaToolStripMenuItem4
+            // btnMenuCierre
             // 
-            this.bebidaToolStripMenuItem4.Name = "bebidaToolStripMenuItem4";
-            this.bebidaToolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
-            this.bebidaToolStripMenuItem4.Text = "Bebida";
-            this.bebidaToolStripMenuItem4.Click += new System.EventHandler(this.bebidaToolStripMenuItem4_Click);
-            // 
-            // comidaToolStripMenuItem4
-            // 
-            this.comidaToolStripMenuItem4.Name = "comidaToolStripMenuItem4";
-            this.comidaToolStripMenuItem4.Size = new System.Drawing.Size(180, 22);
-            this.comidaToolStripMenuItem4.Text = "Comida";
-            this.comidaToolStripMenuItem4.Click += new System.EventHandler(this.comidaToolStripMenuItem4_Click);
+            this.btnMenuCierre.BackColor = System.Drawing.Color.White;
+            this.btnMenuCierre.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnMenuCierre.Font = new System.Drawing.Font("Lucida Sans Unicode", 22F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.btnMenuCierre.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnMenuCierre.Location = new System.Drawing.Point(546, 68);
+            this.btnMenuCierre.Margin = new System.Windows.Forms.Padding(2);
+            this.btnMenuCierre.Name = "btnMenuCierre";
+            this.btnMenuCierre.Size = new System.Drawing.Size(166, 50);
+            this.btnMenuCierre.TabIndex = 25;
+            this.btnMenuCierre.Text = "Cierre Dia";
+            this.btnMenuCierre.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnMenuCierre.UseVisualStyleBackColor = false;
+            this.btnMenuCierre.Click += new System.EventHandler(this.btnMenuCierre_Click);
             // 
             // Form1
             // 
@@ -299,6 +316,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(764, 377);
+            this.Controls.Add(this.btnMenuCierre);
             this.Controls.Add(this.btnMesasMenu);
             this.Controls.Add(this.btnCuentaMenu);
             this.Controls.Add(this.pictureBoxPDF);
@@ -347,6 +365,7 @@
         private System.Windows.Forms.ToolStripMenuItem ocultarProductoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bebidaToolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem comidaToolStripMenuItem4;
+        private System.Windows.Forms.Button btnMenuCierre;
     }
 }
 

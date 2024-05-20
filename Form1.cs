@@ -196,5 +196,11 @@ namespace Administracion_ETRAY
             OcultarProducto ocultar = new OcultarProducto(2);
             ocultar.ShowDialog();
         }
+
+        private void btnMenuCierre_Click(object sender, EventArgs e)
+        {
+            Cierre_Caja cierre = new Cierre_Caja();
+            cierre.ShowDialog();
+        }
     }
 }

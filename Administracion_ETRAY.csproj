@@ -110,6 +110,12 @@
     <Compile Include="Cambio_Imagen.Designer.cs">
       <DependentUpon>Cambio_Imagen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cierre_Caja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cierre_Caja.Designer.cs">
+      <DependentUpon>Cierre_Caja.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cuentas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cambio_Imagen.resx">
       <DependentUpon>Cambio_Imagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cierre_Caja.resx">
+      <DependentUpon>Cierre_Caja.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cuentas.resx">
       <DependentUpon>Cuentas.cs</DependentUpon>
