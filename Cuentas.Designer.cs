@@ -57,7 +57,7 @@
             this.DataCuenta.DefaultCellStyle = dataGridViewCellStyle1;
             this.DataCuenta.Location = new System.Drawing.Point(377, 110);
             this.DataCuenta.Name = "DataCuenta";
-            this.DataCuenta.Size = new System.Drawing.Size(711, 810);
+            this.DataCuenta.Size = new System.Drawing.Size(711, 545);
             this.DataCuenta.TabIndex = 1;
             // 
             // DataMesa
@@ -68,7 +68,7 @@
             this.DataMesa.Location = new System.Drawing.Point(171, 110);
             this.DataMesa.Name = "DataMesa";
             this.DataMesa.ReadOnly = true;
-            this.DataMesa.Size = new System.Drawing.Size(116, 810);
+            this.DataMesa.Size = new System.Drawing.Size(116, 545);
             this.DataMesa.TabIndex = 2;
             // 
             // lblTitulo
@@ -113,7 +113,7 @@
             this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActualizar.Font = new System.Drawing.Font("Lucida Sans Unicode", 26.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnActualizar.ForeColor = System.Drawing.Color.White;
-            this.btnActualizar.Location = new System.Drawing.Point(878, 925);
+            this.btnActualizar.Location = new System.Drawing.Point(1093, 588);
             this.btnActualizar.Margin = new System.Windows.Forms.Padding(2);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(210, 67);
@@ -144,7 +144,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1349, 1041);
+            this.ClientSize = new System.Drawing.Size(1349, 672);
             this.Controls.Add(this.btnPagar);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnMesas);

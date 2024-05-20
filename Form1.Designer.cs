@@ -299,7 +299,7 @@
             this.btnMenuCierre.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnMenuCierre.Font = new System.Drawing.Font("Lucida Sans Unicode", 22F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.btnMenuCierre.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnMenuCierre.Location = new System.Drawing.Point(546, 68);
+            this.btnMenuCierre.Location = new System.Drawing.Point(544, 81);
             this.btnMenuCierre.Margin = new System.Windows.Forms.Padding(2);
             this.btnMenuCierre.Name = "btnMenuCierre";
             this.btnMenuCierre.Size = new System.Drawing.Size(166, 50);
