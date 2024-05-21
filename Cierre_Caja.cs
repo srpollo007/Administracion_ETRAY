@@ -33,7 +33,6 @@ namespace Administracion_ETRAY
                     decimal mediaTotal = mesasAtendidas > 0 ? totalDiario / mesasAtendidas : 0;
                     decimal mediaTicketsDiarios = CalcularMediaMesasAtendidasDiarias();  // Nueva función para calcular la media de tickets diarios
 
-
                     txtTotal.Text = totalDiario.ToString("C2");
                     txtMesasAtendidas.Text = mesasAtendidas.ToString();
                     txtMediaTotal.Text = CalcularMediaTotalDiaria().ToString("C2");
@@ -61,28 +60,17 @@ namespace Administracion_ETRAY
 
         private decimal CalcularMediaTotalDiaria()
         {
-            string cadenaConexion = Utilidades.ObtenerCadenaConexionDesdeXML();
-            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
-            {
-                conexion.Open();
-                // Consulta que calcula el promedio de los totales diarios
-                string consulta = @"
-                SELECT AVG(daily_total) AS average_daily_total
-                FROM (
-                    SELECT DATE(fecha_hora) AS day, SUM(total) AS daily_total
-                    FROM ticket
-                    WHERE pagado = 1
-                    GROUP BY DATE(fecha_hora)
-                ) AS daily_totals";
-
-                using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
-                {
-                    object resultado = comando.ExecuteScalar();
-                    return resultado != DBNull.Value ? Convert.ToDecimal(resultado) : 0;
-                }
-            }
+            string consulta = @"
+            SELECT AVG(daily_total) AS average_daily_total
+            FROM (
+                SELECT DATE(fecha_hora) AS day, SUM(total) AS daily_total
+                FROM ticket
+                WHERE pagado = 1
+                GROUP BY DATE(fecha_hora)
+            ) AS daily_totals";
+            object resultado = EjecutarConsultaScalar(consulta);
+            return resultado != DBNull.Value && resultado != null ? Convert.ToDecimal(resultado) : 0;
         }
-
 
         private int ContarMesasAtendidas()
         {
@@ -97,7 +85,8 @@ namespace Administracion_ETRAY
                 conexion.Open();
                 using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                 {
-                    return Convert.ToInt32(comando.ExecuteScalar());
+                    object resultado = comando.ExecuteScalar();
+                    return resultado != DBNull.Value && resultado != null ? Convert.ToInt32(resultado) : 0;
                 }
             }
         }
@@ -109,24 +98,22 @@ namespace Administracion_ETRAY
             {
                 conexion.Open();
                 string consulta = @"
-                    SELECT AVG(daily_tickets) AS average_daily_tickets
-                    FROM (
-                        SELECT DATE(fecha_hora) AS day, COUNT(*) AS daily_tickets
-                        FROM ticket
-                        WHERE pagado = 1
-                        GROUP BY DATE(fecha_hora)
-                    ) AS daily_ticket_counts";
+                SELECT AVG(daily_tickets) AS average_daily_tickets
+                FROM (
+                    SELECT DATE(fecha_hora) AS day, COUNT(*) AS daily_tickets
+                    FROM ticket
+                    WHERE pagado = 1
+                    GROUP BY DATE(fecha_hora)
+                ) AS daily_ticket_counts";
 
                 using (MySqlCommand comando = new MySqlCommand(consulta, conexion))
                 {
                     object resultado = comando.ExecuteScalar();
                     // Convierte el resultado a decimal y redondea a 0 decimales si deseas eliminar la parte fraccionaria
-                    decimal average = resultado != DBNull.Value ? Convert.ToDecimal(resultado) : 0;
+                    decimal average = resultado != DBNull.Value && resultado != null ? Convert.ToDecimal(resultado) : 0;
                     return Math.Round(average, 0); // Redondea al entero más cercano
                 }
             }
         }
-
-
     }
 }
